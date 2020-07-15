@@ -1,0 +1,65 @@
+{
+  "appTitle": "Note Creator",
+  "themeColor": {
+    "purple": "purple darken-2",
+    "secondary": "secondary"
+  },
+  "alerts": {
+    "notFound": "The search has not given any results"
+  },
+  "fields": {
+    "labels": {
+      "search": "Search"
+    }
+  },
+  "pages": {
+    "main": {
+      "titles": {
+        "notes": "Notes",
+        "create": "create"
+      }
+    },
+    "note": {
+      "titles": {
+        "comments": "Comments"
+      },
+      "links": {
+        "home": "Home"
+      }
+    }
+  },
+  "layouts": {
+    "default": {
+      "btns": {
+        "submit": "Submit"
+      },
+      "menuList": {
+        "firbase": "Save note into firbase",
+        "localStorage": "Save note into localStorage"
+      }
+    }
+  },
+  "components": {
+    "create": {
+      "labels": {
+        "name": "Name",
+        "content": "Note content",
+        "switch": "Save note into localStorage"
+      },
+      "warnings": {
+        "firbase":"By default wil be save note into firbase"
+      }
+    },
+    "comment": {
+      "labels": {
+        "author": "Author",
+        "comment": "Comment"
+      }
+    },
+    "edit": {
+      "btns": {
+        "close": "Close"
+      }
+    }
+  }
+}
