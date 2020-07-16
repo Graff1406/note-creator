@@ -5,7 +5,7 @@
     "secondary": "secondary"
   },
   "alerts": {
-    "notFound": "The search has not given any results"
+    "notFound": "You have not created any note yet"
   },
   "fields": {
     "labels": {
@@ -25,6 +25,13 @@
       },
       "links": {
         "home": "Home"
+      },
+      "warnings": {
+        "deleteNote": "Are you sure you want to delete the note?"
+      },
+      "btns": {
+        "delete": "Delete",
+        "cancel": "Cancel"
       }
     }
   },

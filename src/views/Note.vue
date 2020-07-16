@@ -9,9 +9,8 @@
           <v-spacer></v-spacer>
           <v-col cols="2" sm="2">
             <v-btn 
-              @click="deleteNote" 
+              @click="deleteDialog = true" 
               :color="$text.themeColor.purple"
-              :loading="loading.delete"
               icon
             >
               <v-icon>delete</v-icon>
@@ -73,6 +72,38 @@
         </comments>
       </v-col>
     </v-row>
+    <v-dialog
+      v-model="deleteDialog"
+      scrollable 
+      persistent
+      max-width="500px"
+      transition="dialog-transition"
+    >
+      <v-card>
+        <v-card-title>
+          {{ $text.pages.note.warnings.deleteNote }}
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            @click="deleteDialog = false"
+            :color="$text.themeColor.secondary"
+            text
+          >
+            {{ $text.pages.note.btns.cancel }}
+          </v-btn>
+          <v-btn
+            @click="deleteNote"
+            :loading="loading.delete"
+            :color="$text.themeColor.purple"
+            text
+          >
+            {{ $text.pages.note.btns.delete }}
+          </v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </default-layout>
 </template>
 
@@ -98,7 +129,8 @@ export default {
         comment: false,
         delete: false,
       },
-      dialog: false
+      dialog: false,
+      deleteDialog: false,
     }
   },
   computed: {

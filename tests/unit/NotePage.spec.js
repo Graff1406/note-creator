@@ -1,22 +1,78 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Note from '@/views/Note';
+import $text from '@/assets/text.json';
+import Vuex from 'vuex';
+import VueRouter from 'vue-router';
 
+const localVue = createLocalVue();
 
-describe('Comments component', () => {
+localVue.use(Vuex);
+localVue.use(VueRouter);
+
+const router = new VueRouter();
+
+const windowSize = {
+  data() {
+    return {
+      axis: {
+        x: 0,
+        y: 0
+      }
+    }
+  },
+  computed: {
+    windowSize() {
+      return {x_equalAndMore_600: 600}
+    },
+    note() {
+      return {
+        id: '123',
+        name: 'Avtan',
+        content: 'text',
+        created_at: 1234,
+        comments: []
+      }
+    }
+  }
+}
+
+describe('HomePage component', () => {
+  let actions;
+  let store;
+  let state;
   let wrapper;
   beforeAll(() => {
-    wrapper = shallowMount(Note);
+    state = {
+      notes: [{
+        id: '123',
+        name: 'Avtan',
+        content: 'text',
+        created_at: 1234,
+        comments: []
+      }]
+    };
+    store = new Vuex.Store({
+      actions,
+      state,
+    });
+    wrapper = shallowMount(Note, { 
+      mocks: { $text },
+      mixins: [windowSize],
+      store, 
+      router,
+      localVue,
+     });
   });
-  test("check the method sendNote", () => {
-    const saveNote = jest.fn();
-    wrapper.setMethods({ saveNote });
-    wrapper.find("#data-send-note").trigger("click");
-    expect(saveNote).toBeCalled();
+  test("check the prop axis.x", () => {
+    expect(typeof wrapper.vm.axis.x).toBe('number');
   });
-  test("check the method saveComment", () => {
-    const saveComment = jest.fn();
-    wrapper.setMethods({ saveComment });
-    wrapper.find("#data-send-note").trigger("click");
-    expect(saveComment).toBeCalled();
+  test("check the mounted hoock", () => {
+    expect(typeof Note.mounted).toBe('function');
   });
-});
+  test("check the prop loadingCreateNotes", () => {
+    expect(typeof wrapper.vm.loading.edit).toBe('boolean');
+  });
+  test("check the prop notes", () => {
+    expect(wrapper.vm.note).toEqual(windowSize.computed.note());
+  });
+})

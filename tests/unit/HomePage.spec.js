@@ -1,22 +1,64 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Home from '@/views/Home';
+import $text from '@/assets/text.json';
+import Vuex from 'vuex';
 
+const localVue = createLocalVue();
 
-describe('Comments component', () => {
+localVue.use(Vuex);
+
+ const windowSize = {
+  data() {
+    return {
+      axis: {
+        x: 0,
+        y: 0
+      }
+    }
+  },
+  computed: {
+    windowSize() {
+      return {x_equalAndMore_600: 600}
+    }
+  }
+}
+
+describe('HomePage component', () => {
+  let actions;
+  let store;
+  let state;
   let wrapper;
   beforeAll(() => {
-    wrapper = shallowMount(Home);
+    state = {
+      notes: [{
+        id: '123',
+        name: 'Avtan',
+        content: 'text',
+        created_at: 1234,
+        comments: []
+      }]
+    };
+    store = new Vuex.Store({
+      actions,
+      state
+    });
+    wrapper = shallowMount(Home, { 
+      mocks: { $text },
+      mixins: [windowSize],
+      store, 
+      localVue,
+     });
   });
-  test("check the method createNote", () => {
-    const createNote = jest.fn();
-    wrapper.setMethods({ createNote });
-    wrapper.find("#data-send-note").trigger("click");
-    expect(createNote).toBeCalled();
+  test("check the prop axis.x", () => {
+    expect(typeof wrapper.vm.axis.x).toBe('number');
   });
-  test("check the method saveComment", () => {
-    const remove = jest.fn();
-    wrapper.setMethods({ remove });
-    wrapper.find("#data-send-note").trigger("click");
-    expect(remove).toBeCalled();
+  test("check the mounted hoock", () => {
+    expect(typeof Home.mounted).toBe('function');
   });
-});
+  test("check the prop loadingCreateNotes", () => {
+    expect(typeof wrapper.vm.loadingCreateNotes).toBe('boolean');
+  });
+  test("check the prop notes", () => {
+    expect(wrapper.vm.notes).toEqual(state.notes);
+  });
+})
