@@ -4,7 +4,21 @@
       <v-col cols="12">
         <v-row no-guttars align="center">
           <v-col cols="3" class="pa-2 d-flex justify-start">
-            <router-link to="/">{{ $text.pages.note.links.home }}</router-link>
+            <router-link 
+              v-if="windowSize.x_equalAndMore_600"
+              to="/"
+            >
+              {{ $text.pages.note.links.home }}
+            </router-link>
+            <v-btn 
+              v-else 
+              :color="$text.themeColor.secondary" 
+              to="/" 
+              class="mx-2" 
+              icon
+            >
+              <v-icon>arrow_back_ios</v-icon>
+            </v-btn>
           </v-col>
           <v-spacer></v-spacer>
           <v-col cols="2" sm="2">

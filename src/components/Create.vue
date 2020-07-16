@@ -28,13 +28,14 @@
           filled
           required
         />
-        <v-switch
-          v-if="!!switchLabel"
-          v-model="localStorage"
-          :label="switchLabel"
-          :color="$text.themeColor.purple"
-        ></v-switch>
-        <p class="caption grey--text text--lighten-2">{{ $text.components.create.warnings.firbase }}</p>
+        <v-col v-if="!!switchLabel" cols="12">
+          <v-switch
+            v-model="localStorage"
+            :label="switchLabel"
+            :color="$text.themeColor.purple"
+          ></v-switch>
+          <p class="caption grey--text text--lighten-2">{{ $text.components.create.warnings.firbase }}</p>
+        </v-col>
       </v-col>
       <v-col cols="12" class="py-0">
         <v-btn
