@@ -54,7 +54,7 @@
         "switch": "Save note into localStorage"
       },
       "warnings": {
-        "firbase":"By default wil be save note into firbase"
+        "firbase":"By default will be saved note into firbase"
       }
     },
     "comment": {
