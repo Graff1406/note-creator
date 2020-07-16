@@ -15,8 +15,8 @@
   "pages": {
     "main": {
       "titles": {
-        "notes": "Notes",
-        "create": "create"
+        "notes": "All notes",
+        "create": "Create new note"
       }
     },
     "note": {
