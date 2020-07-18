@@ -1,7 +1,7 @@
 <template>
   <default-layout>
     <v-row no-guttars v-resize="onResize">
-      <v-col cols="12">
+      <v-col cols="12" class="pa-0">
         <v-row no-guttars align="center">
           <v-col cols="3" class="pa-2 d-flex justify-start">
             <router-link 
@@ -34,7 +34,8 @@
             <edit
               @open-dialog="dialog = !dialog"
               @close-dialog="dialog = !dialog"
-              :windowSize="windowSize"
+              :warning-edited.sync="warningEdited"
+              :window-size="windowSize"
               :dialog="dialog"
             >
               <template v-slot:edit>
@@ -145,6 +146,7 @@ export default {
       },
       dialog: false,
       deleteDialog: false,
+      warningEdited: false,
     }
   },
   computed: {
@@ -153,9 +155,6 @@ export default {
         ? this.$store.state.notes.find(note => note.id == this.$route.params.id)
         : {};
     },
-  },
-  async mounted() {
-    await this.A_GET_NOTES();
   },
   methods: {
     updateLocalStorage(note) {
@@ -214,6 +213,7 @@ export default {
         this.updateAppStore(clonNote);
       }
       this.loading[loading] = false;
+      this.warningEdited = true;
     },
     async saveComment(note) {
       note.author = note.name;
@@ -231,7 +231,7 @@ export default {
       this.loading.delete = false;
       const data = this.$store.state.notes.filter(item => item.id !== this.note.id);
       this.$store.commit('M_SET_VAL', { prop: 'notes', data});
-      this.$router.push('/');
+      this.$router.push({path: '/', query: { dn: 1 }});
     },
     ...mapActions(['A_GET_NOTES', 'A_UPDATE_NOTE', 'A_DELETE_NOTE', 'A_CREATE_NOTE'])
   }

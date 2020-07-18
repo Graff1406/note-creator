@@ -16,7 +16,10 @@
     "main": {
       "titles": {
         "notes": "All notes",
-        "create": "Create new note"
+        "create": "New note"
+      },
+      "warnings": {
+        "deleteNote": "Note deleted successfully"
       }
     },
     "note": {
@@ -33,6 +36,12 @@
         "delete": "Delete",
         "cancel": "Cancel"
       }
+    },
+    "notFound": {
+      "title": "Sorry, the requested page does not exist or has been deleted",
+      "linkText": "home page",
+      "text": "404",
+      "subtext": "Page not found"
     }
   },
   "layouts": {
@@ -64,8 +73,12 @@
       }
     },
     "edit": {
+      "title": "Edit note",
       "btns": {
         "close": "Close"
+      },
+      "warnings": {
+        "warningEdited": "Note edited successfuly"
       }
     }
   }

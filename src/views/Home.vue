@@ -58,6 +58,9 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-snackbar v-model="deleteNote" color="success" shaped>
+      {{ $text.pages.main.warnings.deleteNote }}
+    </v-snackbar>
   </default-layout>
 </template>
 
@@ -77,6 +80,7 @@ export default {
   data() {
     return {
       loadingCreateNotes: false,
+      deleteNote: false
     }
   },
   computed: {
@@ -84,8 +88,14 @@ export default {
       return this.$store.state.notes;
     },
   },
+  watch: {
+    deleteNote(value) {
+      if (!value) this.$router.replace({path: '/', query: ''});
+    }
+  },
   async mounted() {
     await this.A_GET_NOTES();
+    if (this.$route.query.dn) this.deleteNote = true;
   },
   methods: {
     saveToLocalStorage(note) {

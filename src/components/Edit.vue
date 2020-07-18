@@ -21,21 +21,25 @@
           : 'dialog-transition'
       "
     >
-      <v-card class="pa-3">
-        <v-row no-guttars justify="end" class="pa-3">
+      <v-card>
+        <v-toolbar :color="$text.themeColor.purple" dark>
+          {{ $text.components.edit.title }}
+          <v-spacer></v-spacer>
           <v-btn
-            :color="$text.themeColor.purple"
             @click="$emit('close-dialog')"
-            text
+            outlined
           >
             {{ $text.components.edit.btns.close }}
           </v-btn>
-        </v-row>
+        </v-toolbar>
         <v-col cols="12">
           <slot name="edit"></slot>
         </v-col>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="warning" color="success" shaped>
+      {{ $text.components.edit.warnings.warningEdited }}
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -43,6 +47,7 @@ export default {
   name: 'Edit',
   props: {
     dialog: Boolean,
+    warningEdited: Boolean,
     windowSize: {
       type: Object,
       required: true,
@@ -50,6 +55,19 @@ export default {
         return obj.axis
       }
     },
+  },
+  data() {
+    return {
+      warning: this.warningEdited
+    }
+  },
+  watch: {
+    warningEdited(v) {
+      if(v) this.warning = v;
+    },
+    warning(v) {
+      if (!v) this.$emit('update:warning-edited', false);
+    }
   }
 }
 </script>

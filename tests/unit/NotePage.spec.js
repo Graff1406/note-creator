@@ -66,9 +66,6 @@ describe('HomePage component', () => {
   test("check the prop axis.x", () => {
     expect(typeof wrapper.vm.axis.x).toBe('number');
   });
-  test("check the mounted hoock", () => {
-    expect(typeof Note.mounted).toBe('function');
-  });
   test("check the prop loadingCreateNotes", () => {
     expect(typeof wrapper.vm.loading.edit).toBe('boolean');
   });
