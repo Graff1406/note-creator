@@ -1,6 +1,6 @@
 {
-  "name": "Create notes for easy life",
-  "short_name": " NOTE-CREATOR",
+  "name": "Create users",
+  "short_name": " USER-CREATOR",
   "theme_color": "#9c27b0",
   "background_color": "#fff",
   "display": "standalone",

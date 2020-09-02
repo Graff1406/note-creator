@@ -3,7 +3,6 @@
     <v-row no-guttars>
       <v-col cols="12">
         <v-card>
-          <!-- <v-card-title>{{ $text.pages.notFound.title }}</v-card-title> -->
           <v-card-text>
             {{ $text.pages.notFound.title }}
             <router-link to="/">{{ $text.pages.notFound.linkText }}</router-link>
@@ -20,7 +19,7 @@
 <script>
 import DefaultLayout from '../layouts/Default'
   export default {
-    name: 'NotFound',
+    name: 'NotFoundPage',
     components: {
       DefaultLayout
     }

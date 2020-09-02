@@ -12,11 +12,11 @@
     </v-row>
     <v-dialog
       v-model="dialog"
-      :fullscreen="!windowSize.x_equalAndMore_600"
+      :fullscreen="!windowSize.widthMoreOrEqual600px"
       persistent
       max-width="500px"
       :transition="
-        !windowSize.x_equalAndMore_600
+        !windowSize.widthMoreOrEqual600px
           ? 'dialog-bottom-transition'
           : 'dialog-transition'
       "
@@ -37,37 +37,18 @@
         </v-col>
       </v-card>
     </v-dialog>
-    <v-snackbar v-model="warning" color="success" shaped>
-      {{ $text.components.edit.warnings.warningEdited }}
-    </v-snackbar>
   </div>
 </template>
 <script>
 export default {
-  name: 'Edit',
+  name: 'EditUser',
   props: {
     dialog: Boolean,
     warningEdited: Boolean,
     windowSize: {
       type: Object,
-      required: true,
-      validator(obj) {
-        return obj.axis
-      }
+      required: true
     },
-  },
-  data() {
-    return {
-      warning: this.warningEdited
-    }
-  },
-  watch: {
-    warningEdited(v) {
-      if(v) this.warning = v;
-    },
-    warning(v) {
-      if (!v) this.$emit('update:warning-edited', false);
-    }
   }
 }
 </script>

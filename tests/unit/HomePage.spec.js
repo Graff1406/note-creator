@@ -7,7 +7,7 @@ const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
- const windowSize = {
+ const options = {
   data() {
     return {
       axis: {
@@ -18,7 +18,7 @@ localVue.use(Vuex);
   },
   computed: {
     windowSize() {
-      return {x_equalAndMore_600: 600}
+      return {widthMoreOrEqual600px: 600}
     }
   }
 }
@@ -30,12 +30,12 @@ describe('HomePage component', () => {
   let wrapper;
   beforeAll(() => {
     state = {
-      notes: [{
+      users: [{
         id: '123',
-        name: 'Avtan',
-        content: 'text',
+        name: 'Name',
+        email: 'Email',
+        address: 'Address',
         created_at: 1234,
-        comments: []
       }]
     };
     store = new Vuex.Store({
@@ -44,21 +44,20 @@ describe('HomePage component', () => {
     });
     wrapper = shallowMount(Home, { 
       mocks: { $text },
-      mixins: [windowSize],
+      mixins: [options],
       store, 
       localVue,
      });
   });
+  console.log('LOG: wrapper', wrapper)
+
   test("check the prop axis.x", () => {
     expect(typeof wrapper.vm.axis.x).toBe('number');
   });
   test("check the mounted hoock", () => {
     expect(typeof Home.mounted).toBe('function');
   });
-  test("check the prop loadingCreateNotes", () => {
-    expect(typeof wrapper.vm.loadingCreateNotes).toBe('boolean');
-  });
-  test("check the prop notes", () => {
-    expect(wrapper.vm.notes).toEqual(state.notes);
+  test("check the prop users", () => {
+    expect(wrapper.vm.users).toEqual(state.users);
   });
 })

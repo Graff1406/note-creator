@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Note from '@/views/Note';
+import User from '@/views/User';
 import $text from '@/assets/text.json';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
@@ -11,7 +11,7 @@ localVue.use(VueRouter);
 
 const router = new VueRouter();
 
-const windowSize = {
+const options = {
   data() {
     return {
       axis: {
@@ -22,17 +22,8 @@ const windowSize = {
   },
   computed: {
     windowSize() {
-      return {x_equalAndMore_600: 600}
+      return {widthMoreOrEqual600px: 600}
     },
-    note() {
-      return {
-        id: '123',
-        name: 'Avtan',
-        content: 'text',
-        created_at: 1234,
-        comments: []
-      }
-    }
   }
 }
 
@@ -43,33 +34,36 @@ describe('HomePage component', () => {
   let wrapper;
   beforeAll(() => {
     state = {
-      notes: [{
+      users: [{
         id: '123',
-        name: 'Avtan',
-        content: 'text',
+        name: 'Name',
+        email: 'Email',
+        address: 'Address',
         created_at: 1234,
-        comments: []
       }]
     };
     store = new Vuex.Store({
       actions,
       state,
     });
-    wrapper = shallowMount(Note, { 
+    wrapper = shallowMount(User, { 
       mocks: { $text },
-      mixins: [windowSize],
+      mixins: [options],
       store, 
       router,
       localVue,
      });
   });
-  test("check the prop axis.x", () => {
+  test("check the prop axis", () => {
     expect(typeof wrapper.vm.axis.x).toBe('number');
   });
-  test("check the prop loadingCreateNotes", () => {
-    expect(typeof wrapper.vm.loading.edit).toBe('boolean');
+  test("check the prop user", () => {
+    expect(wrapper.vm.user).toEqual(state.users[0]);
   });
-  test("check the prop notes", () => {
-    expect(wrapper.vm.note).toEqual(windowSize.computed.note());
+  test("check the method deleteUser", () => {
+    const deleteUser = jest.fn();
+    wrapper.setMethods({ deleteUser });
+    wrapper.find("#btn-delete-user").trigger("click");
+    expect(deleteUser).toBeCalled();
   });
 })

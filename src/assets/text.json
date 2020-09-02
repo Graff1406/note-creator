@@ -1,36 +1,30 @@
 {
-  "appTitle": "Note Creator",
+  "appTitle": "User Creator",
   "themeColor": {
     "purple": "purple darken-2",
     "secondary": "secondary"
   },
   "alerts": {
-    "notFound": "You have not created any note yet"
-  },
-  "fields": {
-    "labels": {
-      "search": "Search"
-    }
+    "notFound": "No user list"
   },
   "pages": {
-    "main": {
+    "home": {
       "titles": {
-        "notes": "All notes",
-        "create": "New note"
+        "users": "All users",
+        "create": "New user"
       },
       "warnings": {
-        "deleteNote": "Note deleted successfully"
+        "userDeleted": "User deleted successfully",
+        "userCreated": "User created successfully"
       }
     },
-    "note": {
-      "titles": {
-        "comments": "Comments"
-      },
+    "user": {
       "links": {
         "home": "Home"
       },
       "warnings": {
-        "deleteNote": "Are you sure you want to delete the note?"
+        "userDeleted": "Are you sure you want to delete the user?",
+        "userUpdated": "User updated successfully"
       },
       "btns": {
         "delete": "Delete",
@@ -48,37 +42,33 @@
     "default": {
       "btns": {
         "submit": "Submit"
-      },
-      "menuList": {
-        "firbase": "Save note into firbase",
-        "localStorage": "Save note into localStorage"
       }
     }
   },
   "components": {
-    "create": {
+    "form": {
       "labels": {
         "name": "Name",
-        "content": "Note content",
-        "switch": "Save note into localStorage"
+        "email": "Email",
+        "address": "Address",
+        "content": "User content"
       },
-      "warnings": {
-        "firbase":"By default will be saved note into firbase"
+      "errors": {
+        "input": "Field can't be empty"
       }
     },
-    "comment": {
+    "searchUser": {
       "labels": {
-        "author": "Author",
-        "comment": "Comment"
+        "search": "Type name of user for search"
       }
     },
     "edit": {
-      "title": "Edit note",
+      "title": "Edit user",
       "btns": {
         "close": "Close"
       },
       "warnings": {
-        "warningEdited": "Note edited successfuly"
+        "warningEdited": "User edited successfuly"
       }
     }
   }

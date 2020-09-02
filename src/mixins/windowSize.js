@@ -11,7 +11,7 @@ export default {
   computed: {
     windowSize() {
         return {
-        x_equalAndMore_600: this.axis.x >= 600,
+        widthMoreOrEqual600px: this.axis.x >= 600,
         axis: this.axis
       }
     }

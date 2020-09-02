@@ -1,5 +1,5 @@
 {
-  "name": "note-list",
+  "name": "user-creator",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -36,5 +36,24 @@
     "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "description": "DEMO: https://user-creator.workagents.vercel.app/",
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Graff1406/user-creator.git"
+  },
+  "keywords": [
+    "User",
+    "creator"
+  ],
+  "author": "Avtandil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Graff1406/user-creator/issues"
+  },
+  "homepage": "https://github.com/Graff1406/user-creator#readme"
 }

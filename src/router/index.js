@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from '@/store';
-const Home = () => import(`../views/Home.vue`);
-const Note = () => import(`../views/Note.vue`);
-const NotFound = () => import(`../views/NotFound.vue`);
+import { GET_USERS } from '@/store/types/actions'
+const Home = () => import(`@/views/Home.vue`);
+const User = () => import(`@/views/User.vue`);
+const NotFound = () => import(`@/views/NotFound.vue`);
 
 Vue.use(VueRouter);
 
@@ -15,14 +16,14 @@ const routes = [
   },
   {
     path: "/:id",
-    name: "Note",
-    component: Note,
+    name: "User",
+    component: User,
     async beforeEnter(to, from, next) {
-      let exists = store.state.notes.find(item => to.params.id === item.id);
+      let exists = store.state.users.some(user => to.params.id === user.id);
       if (exists) next();
       else {
-        await store.dispatch('A_GET_NOTES');
-        exists = store.state.notes.find(item => to.params.id === item.id);
+        await store.dispatch(GET_USERS);
+        exists = store.state.users.find(user => to.params.id === user.id);
         if (exists) next();
         else next({name: 'NotFound'});
       }
@@ -39,10 +40,7 @@ const routes = [
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
-  scrollBehavior () {
-    return { x: 0, y: 0 }
-  }
+  routes
 });
 
 export default router;

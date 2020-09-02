@@ -1,71 +1,73 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
-import { NOTES } from './uriList'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
+import { USERS } from './uriList';
+import { MUTATION_STORE } from './types/mutations';
+import { 
+  GET_USERS, 
+  CREATE_NEW_USER, 
+  UPDATE_USER, 
+  DELETE_USER
+} from './types/actions';
 
-Vue.use(Vuex)
-
-const query = async ( commit, method, data) => {
-  try {
-    await axios[method](...data)
-  } catch(err) {
-    console.log(`store -> query. METHOD - ${method}`, err)
-  }
-}
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    notes: [],
-    loading: false,
+    users: [],
+    loading: false
   },
   mutations: {
-    M_SET_VAL (state, {prop, data}) {
-      state[prop] = data
+    [MUTATION_STORE] (state, {prop, data}) {
+      state[prop] = data;
     }
   },
   actions: {
-    async A_GET_NOTES ({ commit }) {
+    async [GET_USERS] ({ commit }) {
       try {
-        commit("M_SET_VAL", { prop: "loading", data: true });
-        const { data } = await axios.get(`${NOTES}.json`);
-        commit('M_SET_VAL', { prop: 'loading', data: false })
+        commit(MUTATION_STORE, { prop: "loading", data: true });
+        const { data } = await query('get', [`${USERS}/.json`]);
+        commit(MUTATION_STORE, { prop: 'loading', data: false });
         
-        // convert a collection of objects to an array collection from  firbase
-        let notes = [];
+        let users = [];
         if (data)
-          notes = Object.keys(data).map(key => {
+          users = Object.keys(data).map(key => {
             return { ...data[key], id: key };
           });
-        const lsNotes = JSON.parse(localStorage.getItem("notes")) || [];
-        commit("M_SET_VAL", {
-          prop: "notes",
-          data: [...notes, ...lsNotes].sort((a, b) => b.created_at - a.created_at)
+        commit(MUTATION_STORE, {
+          prop: "users",
+          data: users.sort((a, b) => b.created_at - a.created_at)
         });
-      } catch (err) {
-        console.log("store -> A_GET_NOTES", err);
+      } catch (error) {
+        console.log("store -> GET_USERS", error);
+        throw new Error(error);
       }
     },
-    async A_CREATE_NOTE({ commit }, note) {
-      await query(commit, 'post', [`${NOTES}.json`, note])
+    async [CREATE_NEW_USER] ({ commit, state }, user) {
+      const {data:{name: id}} = await query('post', [`${USERS}.json`, user])
+      commit(MUTATION_STORE, {prop: 'users', data: [{id, ...user}, ...state.users]});
     },
-    async A_UPDATE_NOTE({ commit }, data) {
-      await query(commit, 'put', [`${NOTES}/${data.id}.json`, data])
+    async [UPDATE_USER] ({ commit, state }, {id, ...user}) {
+      await query('put', [`${USERS}/${id}.json`, user]);
+      const users = state.users.map(item => item.id === id ? {id, ...user} : item);
+      commit(MUTATION_STORE, { prop: 'users', data: users});
     },
-    async A_DELETE_NOTE({ commit }, id) {
-      await query(commit, 'delete', [`${NOTES}/${id}.json`])
+    async [DELETE_USER] ({ commit, state }, id) {
+      await query('delete', [`${USERS}/${id}.json`]);
+      const users = state.users.filter(user => user.id !== id);
+      commit(MUTATION_STORE, { prop: 'users', data: users });
     }
   },
-  getters: {
-    notes({ notes }) {
-      return notes
-    },
-    loader({ loading }) {
-      return loading
-    },
-    content({ content }) {
-      return content
-    }
-  }
-})
+});
 
-export default store
+async function query(method, data) {
+  try {
+    return await axios[method](...data);
+  } catch(err) {
+    console.log(`store -> query. METHOD - ${method}`, err);
+    alert(`Unfortunately, something went wrong and therefore the task ${method} was not completed. Please reload the page and run the task again.`)
+    throw new Error(err);
+  }
+}
+
+export default store;
